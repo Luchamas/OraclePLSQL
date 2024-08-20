@@ -62,9 +62,9 @@ fg_ativo        INTEGER,
 CONSTRAINT pk_tb_grades_salarios_id_salario PRIMARY KEY(id_salario)
 );
 
-//instruções dml
-//podemos fazer a instrução commit para tornar operações permanentes
-//podemos usar a instrução rollback para desfazer
+//instruÃ§Ãµes dml
+//podemos fazer a instruÃ§Ã£o commit para tornar operaÃ§Ãµes permanentes
+//podemos usar a instruÃ§Ã£o rollback para desfazer
 
 INSERT INTO tb_clientes(id_cliente, nome, sobrenome, dt_nascimento, telefone, fg_ativo)
 VALUES(1, 'James', 'Brown', '01/Jan/1965', '800-55-1211', 1);
@@ -143,3 +143,38 @@ INSERT INTO tb_funcionarios(id_funcionario, id_gerente, nome, sobrenome, cargo, 
 VALUES(4, 2, 'Susan', 'Jones', 'Salesperson', 5000.00, 1);
 
 COMMIT;
+
+DESCRIBE tb_grades_salarios;
+
+INSERT INTO tb_grades_salarios(id_salario, base_salario, teto_salario, fg_ativo)
+VALUES(1, 1, 2500.00, 1);
+
+INSERT INTO tb_grades_salarios(id_salario, base_salario, teto_salario, fg_ativo)
+VALUES(2, 2500.01, 5000.00, 1);
+
+INSERT INTO tb_grades_salarios(id_salario, base_salario, teto_salario, fg_ativo)
+VALUES(3, 5000.01, 7500.00, 1);
+
+INSERT INTO tb_grades_salarios(id_salario, base_salario, teto_salario, fg_ativo)
+VALUES(4, 7500.01, 9999.99, 1);
+
+COMMIT;
+
+SELECT *
+FROM tb_grades_salarios;
+
+UPDATE tb_clientes
+SET sobrenome = 'Orange'
+WHERE id_cliente = 2;
+
+SELECT *
+FROM tb_clientes;
+
+ROLLBACK;
+
+DELETE
+FROM tb_clientes
+WHERE id_cliente = 2;
+
+COMMIT //-- RA-02292: restriÃ§Ã£o de integridade (LOJA.FK_TB_COMPRAS_ID_CLIENTE) violada - registro filho localizado (o rollback Ã© feito automaticamente)
+
